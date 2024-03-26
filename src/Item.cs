@@ -6,7 +6,6 @@ namespace sda_onsite_2_inventory_management.src
         private readonly int _quantity;
         private readonly DateTime _createdAt;
 
-
         public Item(string name, int quantity)
         {
             _name = name;
@@ -18,10 +17,12 @@ namespace sda_onsite_2_inventory_management.src
         {
             return _name;
         }
+
         public DateTime GetCreatedAt()
         {
             return _createdAt;
         }
+
         public int GetQuantity()
         {
             return _quantity;
