@@ -4,11 +4,29 @@ namespace sda_onsite_2_inventory_management.src
     public class Store
     {
         private string _name;
+        private readonly int _maximumCpacity;
         private readonly List<Item> _items;
-        public Store(string name)
+
+        public Store(string name, int maximumCpacity)
         {
             _name = name;
+            _maximumCpacity = maximumCpacity;
             _items = [];
+        }
+
+        public int GetCurrentVolume()
+        {
+            int totalVolume = 0;
+            foreach (Item item in _items)
+            {
+                totalVolume += item.GetQuantity();
+            }
+            return totalVolume;
+        }
+
+        public int GetMaximumCapacity()
+        {
+            return _maximumCpacity;
         }
 
         public List<Item> GetItems()
@@ -16,9 +34,17 @@ namespace sda_onsite_2_inventory_management.src
             return _items;
         }
 
-        public List<Item> SortByNameAsc()
+        public List<Item> SortByName(SortOrder order)
         {
-            return _items.OrderBy(item => item.GetName()).ToList();
+            if (order == SortOrder.ASC)
+            {
+                return _items.OrderBy(item => item.GetName()).ToList();
+            }
+            if (order == SortOrder.DESC)
+            {
+                return _items.OrderByDescending(item => item.GetName()).ToList();
+            }
+            return _items;
         }
 
         public Item? FindByName(string targetItem)
@@ -28,6 +54,13 @@ namespace sda_onsite_2_inventory_management.src
 
         public bool AddItems(Item newItem)
         {
+            var availableSpace = GetMaximumCapacity() - GetCurrentVolume();
+            Console.WriteLine($"availableSpace {availableSpace}");
+            if (availableSpace < newItem.GetQuantity())
+            {
+                throw new Exception("Please give me more space to store !!!");
+            }
+
             bool foundItem = _items.Contains(newItem);
             if (!foundItem)
             {
