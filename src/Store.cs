@@ -55,7 +55,7 @@ namespace sda_onsite_2_inventory_management.src
         public bool AddItems(Item newItem)
         {
             var availableSpace = GetMaximumCapacity() - GetCurrentVolume();
-            Console.WriteLine($"availableSpace {availableSpace}");
+            //Console.WriteLine($"availableSpace {availableSpace}");
             if (availableSpace < newItem.GetQuantity())
             {
                 throw new Exception("Please give me more space to store !!!");
