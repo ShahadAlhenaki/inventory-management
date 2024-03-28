@@ -12,7 +12,7 @@ namespace sda_onsite_2_inventory_management.src
             _name = name;
             _quantity = quantity;
             // _id = _id + 1;
-            _createdAt =  DateTime.Now;
+            _createdAt = DateTime.Now;
         }
         public Item(string name, int quantity, DateTime createdAt)
         {
