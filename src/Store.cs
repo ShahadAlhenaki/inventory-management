@@ -72,11 +72,41 @@ namespace sda_onsite_2_inventory_management.src
 
         public bool RemoveItems(Item item)
         {
-            // check the new item has the same name with the item in the array _items or not  Find() or Any()
-            // if not, then remove item to array 
-            // if yes, throw error or return false
             _items.Remove(item);
             return true;
+        }
+
+        public Dictionary<char, List<Item>> GroupByName(List<Item> items)
+        {
+            Dictionary<char, List<Item>> groups = new();
+
+            foreach (var item in items)
+            {
+                if (!groups.ContainsKey(item.GetName()[0]))
+                {
+                    groups.Add(item.GetName()[0], []);
+                }
+                groups[item.GetName()[0]].Add(item);
+            }
+            return groups;
+        }
+
+        public IEnumerable<IGrouping<string, Item>> GroupByDate()
+        {
+            var grouped = _items.GroupBy(item =>
+            {
+                double timeDifferenceInDays = (DateTime.Now - item.GetCreatedAt()).TotalDays;
+                if (timeDifferenceInDays < 90)
+                {
+                    return "new";
+                }
+                else
+                {
+                    return "old";
+                }
+
+            });
+            return grouped;
         }
     }
 }

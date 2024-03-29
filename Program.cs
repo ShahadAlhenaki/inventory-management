@@ -52,14 +52,24 @@ internal class Program
 
         foreach (var item in paginated)
         {
-            Console.WriteLine(item.GetId() + " " + item.GetName());
+            Console.WriteLine(item.GetName());
         }
 
+        var groupByDate = store.GroupByDate();
+        foreach (var group in groupByDate)
+        {
+            Console.WriteLine($"{group.Key} Items:");
+            foreach (var item in group)
+            {
+                Console.WriteLine($" - {item.GetName
+                ()}, Created: {item.GetCreatedAt().ToShortDateString()}");
+            }
+        }
 
-        // Console.WriteLine($"Current Volume {store.GetCurrentVolume()}");
-        // Console.WriteLine($"Max Capacity {store.GetMaximumCapacity()}");
+        Console.WriteLine($"Current Volume {store.GetCurrentVolume()}");
+        Console.WriteLine($"Max Capacity {store.GetMaximumCapacity()}");
 
-        // Console.WriteLine("count after " + items.Count);
+        Console.WriteLine("count after " + items.Count);
 
         Item? galaxy = store.FindByName("Galaxy crispy");
         if (galaxy is not null)
@@ -73,7 +83,7 @@ internal class Program
 
         foreach (var item in sorted)
         {
-            // Console.WriteLine(item.GetName());
+            //  Console.WriteLine(item.GetName());
 
         }
     }
